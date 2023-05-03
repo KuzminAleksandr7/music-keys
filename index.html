@@ -1,0 +1,287 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            font-size: 12px;
+            height: 100vh;
+            width: 100vw;
+            background: linear-gradient(149deg, rgba(24, 187, 156, 1) 0%, rgba(106, 57, 175, 1) 42%, rgba(187, 24, 148, 1) 72%, rgba(115, 53, 134, 1) 100%);
+            animation: gradient 15s infinite linear;
+            background-size: 400%;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 80% 0%;
+            }
+            50% {
+                background-position: 20% 100%;
+            }
+            100% {
+                background-position: 80% 0%;
+            }
+        }
+
+        .bar {
+            display: flex;
+            justify-content: center;
+        }
+
+        .keys {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .key {
+            border: 2px solid #ffffff;
+            border-radius: 20px;
+            margin: 1rem;
+            font-size: 2rem;
+            padding: 1rem 0.5rem;
+            transition: all 0.2s ease;
+            width: 6rem;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .playing {
+            background-color: #0000005e;
+        }
+
+        button {
+            font-size: 18px;
+            width: 100px;
+            height: 40px;
+            border: 3px solid #333333;
+            border-radius: 25px;
+            background-color: #66501026;
+        }
+
+        a {
+            margin: 10px;
+            padding: 10px;
+            display: inline-block;
+            font-size: 18px;
+            text-decoration: none;
+            color: #ffffff;
+            width: 100px;
+            text-align: center;
+            border: 3px solid #4c71b3;
+            border-radius: 10px;
+            background-color: #6495ed;
+        }
+
+        a:hover {
+            scale: 1.05;
+            background-color: #4c71b3;
+        }
+    </style>
+    <title>KeyBoard Music</title>
+</head>
+<body>
+<div>
+    <div class="keys">
+        <div data-key="65" onclick="kkFunc()" id="au1" class="key">
+            <kbd>A</kbd>
+        </div>
+        <div data-key="83" onclick="snlFunc()" id="au2" class="key">
+            <kbd>S</kbd>
+        </div>
+        <div data-key="71" onclick="htaFunc()" id="au6" class="key">
+            <kbd>G</kbd>
+        </div>
+        <div data-key="72" onclick="htfFunc()" id="au3" class="key">
+            <kbd>H</kbd>
+        </div>
+        <div data-key="74" onclick="htgFunc()" id="au7" class="key">
+            <kbd>J</kbd>
+        </div>
+        <div data-key="75" onclick="guitarAcFunc()" id="au4" class="key">
+            <kbd>K</kbd>
+        </div>
+        <div data-key="76" onclick="guitarRhFunc()" id="au5" class="key">
+            <kbd>L</kbd>
+        </div>
+    </div>
+    <div class="bar">
+        <a href="#" onclick="chill()">Chill!</a>
+        <a href="index.html">Stop it!</a>
+    </div>
+</div>
+<audio data-key="65" src="sounds/kk.wav"></audio>
+<audio data-key="83" src="sounds/snl.wav"></audio>
+<audio data-key="71" src="sounds/hta.wav"></audio>
+<audio data-key="72" src="sounds/htf.wav"></audio>
+<audio data-key="74" src="sounds/htg.wav"></audio>
+<audio data-key="75" src="sounds/guitar_accent.wav"></audio>
+<audio data-key="76" src="sounds/guitar_rhythm.wav"></audio>
+</body>
+<script>
+    function removeTransition(event) {
+        if (event.propertyName !== 'transform') return
+        event.target.classList.remove('playing')
+    }
+
+    function playSound(event) {
+        const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`)
+        const key = document.querySelector(`div[data-key="${event.keyCode}"]`)
+        if (!audio) return
+        key.classList.add('playing')
+
+        function effect() {
+            key.classList.remove('playing');
+        }
+
+        setTimeout(effect, 150);
+        audio.currentTime = 0
+        audio.play()
+    }
+
+    const keys = Array.from(document.querySelectorAll('.key'))
+    keys.forEach((key) => key.addEventListener('transitionend', removeTransition))
+    window.addEventListener('keydown', playSound)
+
+    // Зміннні для реалізації демо-треків та їх візуалізації
+    let guitarRh = new Audio('sounds/guitar_rhythm.wav');
+    let guitarAc = new Audio('sounds/guitar_accent.wav');
+    let kk = new Audio('sounds/kk.wav');
+    let snl = new Audio('sounds/snl.wav');
+    let hta = new Audio('sounds/hta.wav');
+    let htf = new Audio('sounds/htf.wav');
+    let htg = new Audio('sounds/htg.wav');
+    let au1 = document.getElementById('au1');
+    let au2 = document.getElementById('au2');
+    let au3 = document.getElementById('au3');
+    let au4 = document.getElementById('au4');
+    let au5 = document.getElementById('au5');
+    let au6 = document.getElementById('au6');
+    let au7 = document.getElementById('au7');
+
+    // Візуалізація натискання кнопок
+    function auEffect1() {
+        au1.classList.toggle("playing");
+        setTimeout(() => au1.classList.toggle("playing"), 150);
+    }
+
+    function auEffect2() {
+        au2.classList.toggle("playing");
+        setTimeout(() => au2.classList.toggle("playing"), 150);
+    }
+
+    function auEffect3() {
+        au3.classList.toggle("playing");
+        setTimeout(() => au3.classList.toggle("playing"), 150);
+    }
+
+    function auEffect4() {
+        au4.classList.toggle("playing");
+        setTimeout(() => au4.classList.toggle("playing"), 7500);
+    }
+
+    function auEffect5() {
+        au5.classList.toggle("playing");
+        setTimeout(() => au5.classList.toggle("playing"), 7500);
+    }
+
+    function auEffect6() {
+        au6.classList.toggle("playing");
+        setTimeout(() => au6.classList.toggle("playing"), 150);
+    }
+
+    function auEffect7() {
+        au7.classList.toggle("playing");
+        setTimeout(() => au7.classList.toggle("playing"), 150);
+    }
+
+    // Функції для програвання конкретних аудіо
+    function kkFunc() {
+        kk.currentTime = 0;
+        kk.play();
+        auEffect1();
+    }
+
+    function snlFunc() {
+        snl.currentTime = 0;
+        snl.play();
+        auEffect2();
+    }
+
+    function htaFunc() {
+        hta.currentTime = 0;
+        hta.play();
+        auEffect6();
+    }
+
+    function htfFunc() {
+        htf.currentTime = 0;
+        htf.play();
+        auEffect3();
+    }
+
+    function htgFunc() {
+        htg.currentTime = 0;
+        htg.play();
+        auEffect7();
+    }
+
+    function guitarAcFunc() {
+        guitarAc.currentTime = 0;
+        guitarAc.play();
+        auEffect4();
+    }
+
+    function guitarRhFunc() {
+        guitarRh.currentTime = 0;
+        guitarRh.play();
+        auEffect5();
+    }
+
+    // Демо-трек
+    function chill() {
+        guitarAc.currentTime = 0;
+        guitarAc.play();
+        auEffect4();
+        guitarRh.currentTime = 0;
+        guitarRh.play();
+        auEffect5();
+        htf.currentTime = 0;
+        htf.play();
+        auEffect1();
+        kk.play();
+        setTimeout(kkFunc, 2000);
+        setTimeout(kkFunc, 4000);
+        setTimeout(kkFunc, 6000);
+        setTimeout(kkFunc, 6500);
+
+        setTimeout(snlFunc, 1000);
+        setTimeout(snlFunc, 3000);
+        setTimeout(snlFunc, 5000);
+        setTimeout(snlFunc, 7000);
+
+        setTimeout(htfFunc, 500);
+        setTimeout(htfFunc, 1000);
+        setTimeout(htfFunc, 1500);
+        setTimeout(htfFunc, 2000);
+        setTimeout(htfFunc, 2500);
+        setTimeout(htfFunc, 3000);
+        setTimeout(htfFunc, 3500);
+        setTimeout(htfFunc, 4000);
+        setTimeout(htfFunc, 4500);
+        setTimeout(htfFunc, 5000);
+        setTimeout(htfFunc, 5500);
+        setTimeout(htfFunc, 6000);
+        setTimeout(htfFunc, 6500);
+        setTimeout(htfFunc, 7000);
+        setTimeout(htfFunc, 7500);
+        setTimeout(chill, 8000);
+    }
+</script>
+</html>
